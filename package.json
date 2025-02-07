@@ -37,10 +37,6 @@
     "stylelint-config-standard": "^37.0.0",
     "xss": "^1.0.15"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://REDACTED@github.com/Skogarbjorn/Vef2-verk2.git"
-  },
   "bugs": {
     "url": "https://github.com/Skogarbjorn/Vef2-verk2/issues"
   },
