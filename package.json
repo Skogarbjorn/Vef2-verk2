@@ -25,21 +25,18 @@
 		"express": "^4.21.2",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
-    "pg": "^8.13.1"
+    "pg": "^8.13.1",
+    "xss": "^1.0.15"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
-    "dotenv": "^16.4.7",
-    "ejs": "^3.1.10",
     "eslint": "^9.19.0",
     "globals": "^15.14.0",
     "jest": "^29.7.0",
     "jest-environment-node": "^29.7.0",
-    "pg": "^8.13.1",
     "prettier": "^3.4.2",
     "stylelint": "^16.14.1",
-    "stylelint-config-standard": "^37.0.0",
-    "xss": "^1.0.15"
+    "stylelint-config-standard": "^37.0.0"
   },
   "bugs": {
     "url": "https://github.com/Skogarbjorn/Vef2-verk2/issues"
