@@ -1,9 +1,10 @@
 import express from 'express';
 import path from 'node:path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from 'node:url';
 import categoryRouter from './src/routes/categoryRouter.js';
 import questionRouter from './src/routes/questionRouter.js';
 import quizRouter from './src/routes/quizRouter.js';
+import process from 'node:process';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const app = express();
@@ -18,11 +19,11 @@ app.use('/', categoryRouter);
 app.use('/category', quizRouter);
 app.use('/questions', questionRouter);
 
-app.use((req, res) => {
+app.use((_req, res) => {
 	res.status(404).render('404');
 });
 
-app.use((err, req, res, next) => {
+app.use((err, _req, res, _next) => {
 	console.error(err);
 	res.status(500).render('500');
 });

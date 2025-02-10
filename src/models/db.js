@@ -1,5 +1,6 @@
 import pg from 'pg';
 import dotenv from 'dotenv';
+import process from 'node:process';
 
 dotenv.config();
 
@@ -7,9 +8,9 @@ const { Client } = pg;
 
 const client = new Client({
 	connectionString: process.env.DATABASE_URL,
-	ssl: {
-		rejectUnauthorized: false,
-	},
+	ssl: process.env.NODE_ENV === 'production' 
+		? { rejectUnauthorized: false, }
+	  : false
 });
 
 client.connect().then(() => {
