@@ -29,5 +29,5 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-	console.log(`Server running on http://localhost:${PORT}`);
+	console.log(`Server running on ${process.env.NODE_ENV === 'production' ? `https://Vef2-verk2.onrender.com` : `https://localhost:${PORT}`}`);
 });
