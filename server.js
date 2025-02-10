@@ -1,4 +1,4 @@
-import express from 'express';
+import express from 'node:express';
 import path from 'node:path';
 import { fileURLToPath } from 'url';
 import categoryRouter from './src/routes/categoryRouter.js';
