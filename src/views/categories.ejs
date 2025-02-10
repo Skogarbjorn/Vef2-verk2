@@ -1,4 +1,6 @@
 <h1>Categories</h1>
 <ul>
-  <li><a href="/categories/>gamer</a></li>
+  <% categories.forEach(category => { %>
+		<li><a href="/category/<%= category.id %>"><%= category.name %></a></li>
+	<% }) %>
 </ul>

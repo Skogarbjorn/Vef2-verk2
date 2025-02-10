@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'url';
 import categoryRouter from './src/routes/categoryRouter.js';
 import questionRouter from './src/routes/questionRouter.js';
+import quizRouter from './src/routes/quizRouter.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const app = express();
@@ -14,6 +15,7 @@ app.set('views', path.join(__dirname, 'src/views'));
 app.set('view engine', 'ejs');
 
 app.use('/', categoryRouter);
+app.use('/category', quizRouter);
 app.use('/questions', questionRouter);
 
 app.use((req, res) => {

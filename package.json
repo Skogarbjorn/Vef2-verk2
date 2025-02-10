@@ -6,9 +6,7 @@
   "main": "src/backend/generateHTML.js",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
-    "build": "run-s build:*",
-    "build:clean": "rimraf dist .temp",
-    "build:generate": "node src/main.js",
+		"start": "node server.js",
     "dev": "browser-sync start --server \"dist\" --files \"**/*.html, **/*.css, **/*.js\"",
     "lint": "run-p lint:*",
     "lint:eslint": "eslint ./src/**/*.js",

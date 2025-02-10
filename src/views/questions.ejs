@@ -1,0 +1,18 @@
+<div class="quiz-container">
+	<h1><%= category.title %></h1>
+	<form id="quiz-form">
+		<% questions.forEach((question, qIndex) => { %>
+		<div class="question>
+			<pre><%= question.question %></pre>
+			<% question.answers.forEach((answer, aIndex) => { %>
+				<div class="answer">
+				  <label>
+					  <input type="radio" name="question<%= qIndex %>" value="answer<%= aIndex %>" data-is-correct="<%= answer.correct %>">
+						<%= answer.answer %>
+					</label>
+				</div>
+			<% }) %>
+		</div>
+		<% }) %>
+	</form>
+</div>
