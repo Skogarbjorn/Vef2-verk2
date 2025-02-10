@@ -28,6 +28,10 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-	console.log(`Server running on ${process.env.NODE_ENV === 'production' ? `https://Vef2-verk2.onrender.com` : `https://localhost:${PORT}`}`);
+const HOST = process.env.NODE_ENV === 'production' ? '0.0.0.0' : 'localhost';
+
+app.listen(PORT, HOST, () => {
+	console.log(`Server running on ${process.env.NODE_ENV === 'production' 
+			? `https://Vef2-verk2.onrender.com`
+			: `https://localhost:${PORT}`}`);
 });
