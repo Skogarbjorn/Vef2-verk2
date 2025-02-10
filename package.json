@@ -4,6 +4,9 @@
   "type": "module",
   "description": "## Verkefni 2",
   "main": "src/backend/generateHTML.js",
+	"engines": {
+		"node": "23.7.0"
+	},
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
     "start": "node server.js",
