@@ -6,7 +6,7 @@
   "main": "src/backend/generateHTML.js",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
-		"start": "node server.js",
+    "start": "node server.js",
     "dev": "browser-sync start --server \"dist\" --files \"**/*.html, **/*.css, **/*.js\"",
     "lint": "run-p lint:*",
     "lint:eslint": "eslint ./src/**/*.js",
@@ -18,7 +18,8 @@
   "dependencies": {
     "browser-sync": "^3.0.3",
     "npm-run-all": "^4.1.5",
-    "rimraf": "^6.0.1"
+    "rimraf": "^6.0.1",
+		"express": "^4.21.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
