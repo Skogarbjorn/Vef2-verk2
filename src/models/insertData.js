@@ -1,6 +1,8 @@
 import { readJson } from '../lib/parse.js';
 import pg from 'pg';
 import dotenv from 'dotenv';
+import process from 'node:process';
+import { shuffle } from '../lib/shuffle.js';
 
 const INDEX_PATH = './data/index.json'
 
@@ -9,14 +11,8 @@ const { Client } = pg;
 dotenv.config();
 
 const client = new Client({
-	host: process.env.DB_HOST,
-	port: process.env.DB_PORT,
-	user: process.env.DB_USER,
-	password: process.env.DB_PASSWORD,
-	database: process.env.DB_NAME,
-	ssl: {
-		rejectUnauthorized: false,
-	}
+	connectionString: process.env.DATABASE_URL,
+	ssl: { rejectUnauthorized: false, }
 });
 
 client.connect().then(() => {
@@ -86,9 +82,9 @@ async function insertData() {
 						const questionResult = await query(questionInsertSQL);
 						const questionId = questionResult.rows[0].id;
 
-						const answerSQL = question.answers
-						  .filter(answer => answer.answer)
-						  .map((answer, aIndex) => 
+						const answerSQL = shuffle(question.answers
+						  .filter(answer => answer.answer))
+						  .map(answer => 
 							`(${questionId}, '${escapeSQL(answer.answer)}', ${answer.correct ? 'true' : 'false'})`)
 						  .join(',\n');
 
@@ -102,38 +98,6 @@ async function insertData() {
 			);
 		})
 	);
-
-	//const categorySQL = allData.map((category, cIndex) => `('${category.title}')`).join(',\n');
-	//await query(`INSERT INTO categories (name) VALUES\n${categorySQL} RETURNING id`);
-
-	//await Promise.all(
-	//	allData.map(async (category, cIndex) => {
-	//		const questions = category.content.questions;
-	//		const questionSQL = questions .filter(question => 
-	//				question.question && 
-	//				question.answers &&
-	//				Array.isArray(question.answers))
-	//			.map((question, qIndex) =>
-	//			`('${(cIndex+1) * (qIndex+1)}', '${escapeSQL(question.question)}', ${cIndex+1})`).join(',\n');
-	//		await query(`INSERT INTO questions (id, question, category_id) VALUES\n${questionSQL};`);
-
-	//		await Promise.all(
-	//			questions
-	//			  .filter(question => 
-	//					question.question && 
-	//					question.answers &&
-	//					Array.isArray(question.answers))
-	//				.map(async (question, qIndex) => {
-	//				if (!Array.isArray(question.answers)) {
-	//					return;
-	//				}
-	//				const answerSQL = question.answers
-	//					.filter(answer => answer.answer)
-	//					.map((answer, aIndex) => {
-	//						return `('${(cIndex+1) * (qIndex+1) * (aIndex+1)}', '${escapeSQL(answer.answer)}', ${answer.correct}, ${(cIndex+1) * (qIndex+1)})`}).join(',\n');
-	//				await query(`INSERT INTO answers (id, answer, is_correct, question_id) VALUES\n${answerSQL};`);
-	//			}));
-	//	}));
 }
 
 async function createTables() {
