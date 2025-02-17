@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import categoryRouter from './src/routes/categoryRouter.js';
-import questionRouter from './src/routes/questionRouter.js';
+import newQuestionRouter from './src/routes/newQuestionRouter.js';
 import quizRouter from './src/routes/quizRouter.js';
 import process from 'node:process';
 
@@ -16,8 +16,8 @@ app.set('views', path.join(__dirname, 'src/views'));
 app.set('view engine', 'ejs');
 
 app.use('/', categoryRouter);
-app.use('/category', quizRouter);
-app.use('/questions', questionRouter);
+app.use('/quiz', quizRouter);
+app.use('/add-question', newQuestionRouter);
 
 app.use((_req, res) => {
 	res.status(404).render('404');

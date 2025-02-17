@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/styles.css">
+	<title>Add New Question</title>
+</head>
+<body>
+	<div class="floating-box">
+		<h1>Add New Question</h1>
+
+		<div class="form-div">
+			<form action="/add-question" method="POST">
+				<% if (error) { %>
+					<p class="error-message"><%= error %></p>
+				<% } %>
+				<div class="form-category">
+					<label for="category">Select Category:</label>
+					<select name="category" id="category" required>
+						<% categories.forEach((category, cIndex) => { %>
+						<option value="<%= category.id %>" 
+						<% if (user_inputs && user_inputs.category == cIndex+1) { %>
+						selected
+						<% } %>
+						><%= category.name %></option>
+						<% }) %>
+					</select>
+				</div>
+
+				<div class="form-question">
+					<label for="question">Question:</label>
+					<textarea name="question" id="question" required><% if (user_inputs) { %><%= user_inputs.question %><% } %></textarea>
+				</div>
+
+				<div class="form-answers">
+					<label for="answers">Answers (comma-separated):</label>
+					<textarea name="answers" id="answers" required><% if (user_inputs) { %><%= user_inputs.answers %><% } %></textarea>
+				</div
+
+				<div class="form-correct">
+					<label for="correct">Which answer is correct?</label>
+					<select name="correct" id="correct" required>
+						<% for (let i = 1; i < 5; i++) { %>
+						<option value="<%= i %>"
+						<% if (user_inputs && user_inputs.correct == i) { %>
+						selected
+						<% } %>
+						><%= i %></option>
+						<% } %>
+					</select>
+				</div>
+
+				<div class="form-submit-button">
+					<button type="submit">Add Question</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,6 +1,41 @@
-<h1>Categories</h1>
-<ul>
-  <% categories.forEach(category => { %>
-		<li><a href="/category/<%= category.id %>"><%= category.name %></a></li>
-	<% }) %>
-</ul>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Categories</title>
+		<link rel="stylesheet" href="/styles.css">
+	</head>
+	<body>
+		<div class="floating-box">
+			<header>
+				<h1>Categories</h1>
+			</header>
+			<main>
+				<div class="main-description">
+					<p>Some crazy and customizeable quizzes</p>
+				</div>
+				<div class="main-category-list">
+					<ul>
+						<% categories.forEach(category => { %>
+						<div class="main-link">
+							<li><a href="/quiz/<%= category.id %>"><%= category.name %></a></li>
+						</div>
+						<% }) %>
+					</ul>
+				</div>
+				<div class="main-divider-div">
+					<hr class="main-divider"></hr>
+				</div>
+				<div class="main-add-question">
+					<div class="main-add-question-button">
+						<a href="/add-question">Add a new question</a>
+					</div>
+				</div>
+			</main>
+			<footer>
+				<p>© gamer quiz</p>
+			</footer>
+		</div>
+	</body>
+</html>

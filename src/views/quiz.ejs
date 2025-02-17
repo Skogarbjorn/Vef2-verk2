@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script type="module" src="/main.js"></script>
+		<title><%= category.name %> Questions</title>
+		<link rel="stylesheet" href="/styles.css">
+	</head>
+	<body>
+		<div class="quiz-container">
+			<h1><%= category.name %> Questions</h1>
+			<form method="POST" action="/quiz/<%= id %>" id="quiz-form">
+				<% questions.forEach((question, qIndex) => { %>
+					<div class="question">
+						<pre><%= question.question %></pre>
+						<% question.answers.forEach((answer, aIndex) => { %>
+							<div class="answer">
+								<label>
+									<input type="radio" name="<%= qIndex %>" value="<%= aIndex %>"
+									<% if (results) { %>
+										<% if (results[qIndex].incorrect === aIndex) { %>
+										  class="incorrect"
+										<% } if (results[qIndex].correct === aIndex) { %>
+										  class="correct"
+										<% } %>
+									<% } %>
+									<% if (checked && checked[qIndex] === aIndex) { %>
+									  checked
+									<% } %>
+									>
+									<%= answer.answer %>
+								</label>
+							</div>
+						<% }) %>
+					</div>
+				<% }) %>
+				<div class="button-div">
+					<% if (results) { %>
+					<div class="return-div">
+					  <a href="/">Back to select a category</a>
+					</div>
+					<% } else { %>
+						<button type="submit" id="submit-button" disabled>Submit</button>
+					<% } %>
+				</div>
+			</form>
+		</div>
+	</body>
+</html>

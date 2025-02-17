@@ -3,17 +3,16 @@
   "version": "1.0.0",
   "type": "module",
   "description": "## Verkefni 2",
-  "main": "src/backend/generateHTML.js",
 	"engines": {
 		"node": "23.7.0"
 	},
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
+		"build": "node src/models/insertData.js",
     "start": "node server.js",
-    "dev": "browser-sync start --server \"dist\" --files \"**/*.html, **/*.css, **/*.js\"",
     "lint": "run-p lint:*",
-    "lint:eslint": "eslint ./src/**/*.js",
-    "lint:stylelint": "stylelint ./src/**/*.css"
+    "lint:eslint": "eslint ./src/**/*.js && eslint ./public/**/*.js",
+    "lint:stylelint": "stylelint ./public/**/*.css"
   },
   "keywords": [],
   "author": "",
