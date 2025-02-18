@@ -16,7 +16,7 @@ const client = new Client({
 });
 
 client.connect().then(() => {
-	console.log('Connected to PostgreSQL database');
+	console.log('Connected to PostgreSQL database..');
 }).catch((err) => {
 	console.error('Connection error', err.stack);
 });
@@ -33,7 +33,6 @@ async function query(text, params) {
 
 async function insertData() {
 	const indexData = await readJson(INDEX_PATH);
-	console.log(indexData);
 
 	if (!Array.isArray(indexData)) {
 		console.error("index.json is not an array. Check the file format.");
@@ -55,8 +54,6 @@ async function insertData() {
 		)
 	).filter(item => item && item.content);
 
-	console.log("Items filtered");
-
 	await Promise.all(
 		allData.map(async (category) => {
 			const questions = category.content.questions;
@@ -65,7 +62,6 @@ async function insertData() {
 			const categoryResult = await query(categoryInsertSQL, [escapeSQL(category.title)]);
 			const categoryId = categoryResult.rows[0].id;
 
-			console.log(questions);
 			await Promise.all(
 				questions
 				  .filter(question =>
