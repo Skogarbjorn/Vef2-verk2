@@ -127,9 +127,9 @@ ul {
 	background-color: #343434;
 }
 
-.main-link li:hover a,
 .main-add-question-button:hover a,
 .return-div:hover a
+.main-link li:hover a,
 {
 	color: #eee;
 }
@@ -252,7 +252,6 @@ div:has(> label > input.incorrect) {
     background: #fff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: left;
 }
 
@@ -285,7 +284,6 @@ div:has(> label > input.incorrect) {
     font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
-    transition: background 0.3s;
 		margin-top: 2rem;
 		padding: 0.8em;
 		background: #fdfdfd;

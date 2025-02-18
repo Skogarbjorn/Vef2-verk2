@@ -1,5 +1,5 @@
 import { query } from '../models/db.js';
-import { readQuestions } from '../lib/readQuestions.js';
+import { readQuestions } from '../models/readQuestions.js';
 
 export const getQuestions = async (req, res) => {
 	const { id } = req.params;

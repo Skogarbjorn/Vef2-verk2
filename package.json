@@ -4,7 +4,7 @@
   "type": "module",
   "description": "## Verkefni 2",
 	"engines": {
-		"node": "23.7.0"
+		"node": "22.0.0"
 	},
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",

@@ -57,13 +57,12 @@ async function insertData() {
 
 	console.log("Items filtered");
 
-	let cIndex = 1;
 	await Promise.all(
-		allData.map(async (category, cIndex) => {
+		allData.map(async (category) => {
 			const questions = category.content.questions;
 
-			const categoryInsertSQL = `INSERT INTO categories (name) VALUES ('${escapeSQL(category.title)}') RETURNING id`;
-			const categoryResult = await query(categoryInsertSQL);
+			const categoryInsertSQL = `INSERT INTO categories (name) VALUES ($1) RETURNING id`;
+			const categoryResult = await query(categoryInsertSQL, [escapeSQL(category.title)]);
 			const categoryId = categoryResult.rows[0].id;
 
 			console.log(questions);
@@ -73,37 +72,39 @@ async function insertData() {
 						question.question &&
 						question.answers &&
 						Array.isArray(question.answers))
-				  .map(async (question) => {
-						const questionInsertSQL = `
-						  INSERT INTO questions (category_id, question)
-						  VALUES (${categoryId}, '${escapeSQL(question.question)}')
-						  RETURNING id
-						`;
-						const questionResult = await query(questionInsertSQL);
-						const questionId = questionResult.rows[0].id;
+				.map(async (question) => {
+					const questionInsertSQL = `
+					INSERT INTO questions (category_id, question)
+					VALUES ($1, $2)
+					RETURNING id
+					`;
+					const questionResult = await query(questionInsertSQL, [categoryId, escapeSQL(question.question)]);
+					const questionId = questionResult.rows[0].id;
 
-						const answerSQL = shuffle(question.answers
-						  .filter(answer => answer.answer))
-						  .map(answer => 
-							`(${questionId}, '${escapeSQL(answer.answer)}', ${answer.correct ? 'true' : 'false'})`)
-						  .join(',\n');
+					const values = [];
+					const placeholders = [];
 
-						if (answerSQL) {
-							await query(`
-								INSERT INTO answers (question_id, answer, is_correct)
-								VALUES ${answerSQL};
-							`);
-						}
-					})
+					shuffle(question.answers.filter(answer => answer.answer)).forEach((answer, index) => {
+						values.push(questionId, answer.answer, answer.correct);
+						placeholders.push(`($${index * 3 + 1}, $${index * 3 + 2}, $${index * 3 + 3})`);
+					});
+
+					if (values.length > 0) {
+						await query(
+							`INSERT INTO answers (question_id, answer, is_correct) VALUES ${placeholders.join(', ')}`,
+							values
+						);
+					}
+				})
 			);
 		})
 	);
 }
 
 async function createTables() {
-	await query(`CREATE TABLE categories \( id SERIAL PRIMARY KEY, name VARCHAR\(255\) NOT NULL\)`);
-	await query(`CREATE TABLE questions \( id SERIAL PRIMARY KEY, question TEXT NOT NULL, category_id INT REFERENCES categories\(id\) ON DELETE CASCADE\)`);
-	await query(`CREATE TABLE answers \( id SERIAL PRIMARY KEY, answer TEXT NOT NULL, is_correct BOOLEAN DEFAULT FALSE, question_id INT REFERENCES questions\(id\) ON DELETE CASCADE\)`);
+	await query(`CREATE TABLE categories ( id SERIAL PRIMARY KEY, name VARCHAR(255) NOT NULL)`);
+	await query(`CREATE TABLE questions ( id SERIAL PRIMARY KEY, question TEXT NOT NULL, category_id INT REFERENCES categories(id) ON DELETE CASCADE)`);
+	await query(`CREATE TABLE answers ( id SERIAL PRIMARY KEY, answer TEXT NOT NULL, is_correct BOOLEAN DEFAULT FALSE, question_id INT REFERENCES questions(id) ON DELETE CASCADE)`);
 }
 
 async function deleteTables() {
